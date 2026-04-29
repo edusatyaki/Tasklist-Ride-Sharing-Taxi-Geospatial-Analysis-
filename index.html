@@ -1,0 +1,1509 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NYC Yellow Taxi 2025 — Project Guide & Task Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── BASE & VARIABLES ─────────────────────────────────── */
+:root {
+  --bg: #F8FAFC;
+  --surface: #FFFFFF;
+  --surface-hover: #F1F5F9;
+  --surface-done: #F8FAF9;
+  
+  --border: #E2E8F0;
+  --border-focus: #CBD5E1;
+  
+  --text-main: #0F172A;
+  --text-sec: #475569;
+  --text-muted: #64748B;
+  
+  --brand: #F59E0B;
+  --brand-bg: #FEF3C7;
+  --brand-text: #B45309;
+  
+  --primary: #3B82F6;
+  --primary-bg: #EFF6FF;
+  
+  --success: #10B981;
+  --success-bg: #ECFDF5;
+  --success-border: #A7F3D0;
+  
+  --danger: #EF4444;
+  --danger-bg: #FEF2F2;
+  
+  --purple: #8B5CF6;
+  --purple-bg: #F5F3FF;
+  
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── TYPOGRAPHY & UTILITIES ───────────────────────────── */
+h1, h2, h3, h4 { line-height: 1.2; letter-spacing: -0.02em; }
+code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: #F1F5F9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #334155;
+}
+
+/* ── HEADER ───────────────────────────────────────────── */
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 48px 0 32px;
+}
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+}
+@media (max-width: 768px) {
+  .header-inner { flex-direction: column; align-items: flex-start; }
+}
+.header-eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+.header-title {
+  font-size: clamp(32px, 5vw, 42px);
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+.header-sub {
+  font-size: 16px;
+  color: var(--text-sec);
+  max-width: 600px;
+}
+.header-stats {
+  display: flex;
+  gap: 32px;
+  background: var(--bg);
+  padding: 20px 32px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.hstat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.hstat-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.hstat-val {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* ── NAVIGATION ───────────────────────────────────────── */
+.nav-wrapper {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topnav {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.topnav::-webkit-scrollbar { display: none; }
+.tnav-btn {
+  padding: 16px 8px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-sec);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.tnav-btn:hover { color: var(--text-main); }
+.tnav-btn.on {
+  color: var(--brand-text);
+  border-bottom-color: var(--brand);
+}
+
+/* ── PROGRESS STRIP ───────────────────────────────────── */
+.prog-strip {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.prog-track {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.prog-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--success);
+  border-radius: 99px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.prog-txt {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-sec);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── SECTIONS & CONTENT ───────────────────────────────── */
+.section { display: none; animation: fadeIn 0.3s ease; }
+.section.on { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+.sec-body {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 32px 80px;
+}
+.phase-hd {
+  margin: 0 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.phase-pill {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--brand-text);
+  background: var(--brand-bg);
+  padding: 4px 10px;
+  border-radius: 99px;
+}
+.phase-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* ── ALERTS / CALLOUTS ────────────────────────────────── */
+.callout {
+  padding: 16px 20px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  margin-bottom: 24px;
+  border-left: 4px solid var(--brand);
+}
+.callout.orange { border-left-color: var(--brand); background: var(--brand-bg); border-color: transparent; }
+.callout.teal { border-left-color: var(--success); background: var(--success-bg); border-color: transparent; }
+.callout.blue { border-left-color: var(--primary); background: var(--primary-bg); border-color: transparent; }
+.callout.purple { border-left-color: var(--purple); background: var(--purple-bg); border-color: transparent; }
+.callout-h {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+.callout-b {
+  font-size: 14px;
+  color: var(--text-sec);
+}
+.callout-b strong { color: var(--text-main); }
+
+/* ── GRIDS & CARDS ────────────────────────────────────── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+.g3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 24px; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+.card-n {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--brand-text);
+  background: var(--brand-bg);
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+.card-t {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.card-b {
+  font-size: 14px;
+  color: var(--text-sec);
+}
+
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+.kpi-n {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.kpi-v {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+.kpi-d { font-size: 12px; color: var(--text-sec); }
+
+/* ── GITHUB FILE TREE UI ──────────────────────────────── */
+.repo-box {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  overflow: hidden;
+  margin-top: 12px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+.repo-header {
+  background: #F8FAFC;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  font-weight: 600;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tree-list, .tree-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.tree-list ul {
+  padding-left: 22px;
+  border-left: 1px solid var(--border);
+  margin-left: 24px;
+}
+.tree-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  color: var(--text-sec);
+  cursor: default;
+}
+.tree-item:hover {
+  background: var(--surface-hover);
+  color: var(--text-main);
+}
+.tree-icon {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: var(--text-muted);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.tree-icon.folder {
+  fill: #DBEAFE;
+  stroke: #3B82F6;
+}
+
+/* ── TABLES ───────────────────────────────────────────── */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 32px;
+  background: var(--surface);
+}
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.tbl th {
+  background: #F8FAFC;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 11px;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.tbl td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-sec);
+  vertical-align: top;
+}
+.tbl tr:last-child td { border-bottom: none; }
+.tbl td strong { color: var(--text-main); font-weight: 500; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+.b-red { background: var(--danger-bg); color: #B91C1C; }
+.b-or { background: var(--brand-bg); color: var(--brand-text); }
+.b-gr { background: var(--success-bg); color: #047857; }
+.b-te { background: #E0F2FE; color: #0369A1; }
+.b-pu { background: var(--purple-bg); color: #6D28D9; }
+
+/* ── TASK LIST & SIDEBAR ──────────────────────────────── */
+.layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 32px 80px;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 40px;
+}
+@media (max-width: 800px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+}
+
+.sidebar {
+  position: sticky;
+  top: 90px;
+  height: calc(100vh - 120px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.sb-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+.sb-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 12px;
+  margin: 0 -12px 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--text-sec);
+  transition: all 0.2s;
+}
+.sb-item:hover { background: var(--surface-hover); color: var(--text-main); }
+.sb-n {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  min-width: 18px;
+}
+.sb-t { font-size: 13px; flex: 1; }
+.sb-ck {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-focus);
+  margin-top: 2px;
+  transition: all 0.2s;
+}
+.sb-ck.done { background: var(--success); border-color: var(--success); }
+
+/* ── TASK CARDS ───────────────────────────────────────── */
+.task {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+.task:hover {
+  border-color: var(--border-focus);
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+}
+.task.done {
+  background: var(--surface-done);
+  border-color: var(--success-border);
+}
+
+.t-head {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  gap: 16px;
+  cursor: pointer;
+  user-select: none;
+}
+.t-cb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cb {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-focus);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.cb svg {
+  width: 12px; height: 12px;
+  fill: none; stroke: white; stroke-width: 3;
+  stroke-linecap: round; stroke-linejoin: round;
+  opacity: 0; transform: scale(0.5);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.task.done .cb { background: var(--success); border-color: var(--success); }
+.task.done .cb svg { opacity: 1; transform: scale(1); }
+
+.t-meta { flex: 1; }
+.t-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-main);
+  margin-bottom: 8px;
+  transition: color 0.2s;
+}
+.task.done .t-title {
+  color: var(--text-sec);
+  text-decoration: line-through;
+  text-decoration-color: var(--text-muted);
+}
+
+.t-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.tag {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: var(--bg);
+  color: var(--text-sec);
+  border: 1px solid var(--border);
+}
+.tg-py { background: var(--primary-bg); color: var(--primary); border-color: #BFDBFE; }
+.tg-v { background: var(--brand-bg); color: var(--brand-text); border-color: #FDE68A; }
+.tg-s { background: var(--purple-bg); color: #6D28D9; border-color: #DDD6FE; }
+.tg-r { background: #FEF2F2; color: #B91C1C; border-color: #FECACA; }
+
+.t-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.eff {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.eff::before {
+  content: '';
+  display: inline-block;
+  width: 14px; height: 14px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E");
+  background-size: cover;
+}
+.pdot { width: 8px; height: 8px; border-radius: 50%; }
+.pc { background: var(--danger); box-shadow: 0 0 0 3px var(--danger-bg); }
+.ph { background: var(--brand); box-shadow: 0 0 0 3px var(--brand-bg); }
+.pm { background: var(--success); }
+
+/* ── TASK BODY ────────────────────────────────────────── */
+.t-body {
+  display: none;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  padding: 24px 20px 24px 56px;
+}
+.t-body.open {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+@media (max-width: 768px) {
+  .t-body.open { grid-template-columns: 1fr; padding-left: 20px; }
+}
+.tbl-lbl {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+.steps {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  counter-reset: sc;
+}
+.steps li {
+  font-size: 14px;
+  color: var(--text-sec);
+  line-height: 1.5;
+  padding-left: 24px;
+  position: relative;
+}
+.steps li::before {
+  content: counter(sc) ".";
+  counter-increment: sc;
+  position: absolute;
+  left: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.codeblock {
+  background: #1E293B;
+  color: #E2E8F0;
+  border-radius: 8px;
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-x: auto;
+  margin-top: 12px;
+}
+.cm { color: #64748B; } /* Comments */
+.ck { color: #C084FC; } /* Keywords */
+.cs { color: #86EFAC; } /* Strings */
+.cf { color: #60A5FA; } /* Functions */
+
+.outnote {
+  background: var(--primary-bg);
+  border-left: 3px solid var(--primary);
+  padding: 16px;
+  font-size: 14px;
+  color: #1E3A8A;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+}
+.outnote strong { color: #172554; font-weight: 600; }
+
+/* ── DIVIDER & TOTALS ─────────────────────────────────── */
+.divr {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 56px 0 32px;
+}
+.divr-l { flex: 1; height: 1px; background: var(--border); }
+.divr-t {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.totals {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+@media (max-width: 640px) { .totals { grid-template-columns: 1fr 1fr; } }
+.tot-v {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.tot-l { font-size: 13px; color: var(--text-sec); }
+
+/* Content block in Report section */
+.report-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.report-block-hd {
+  background: #F8FAFC;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-sec);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.report-block-bd {
+  padding: 20px;
+  font-size: 14px;
+  color: var(--text-sec);
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div>
+      <div class="header-eyebrow">NYC TLC Open Data · 12-Month Full Year</div>
+      <div class="header-title">NYC Yellow Taxi 2025</div>
+      <div class="header-sub">Revenue intelligence, demand forecasting & surge pricing analysis across 48.7 million trips — January through December 2025.</div>
+    </div>
+    <div class="header-stats">
+      <div class="hstat">
+        <span class="hstat-label">Total Trips</span>
+        <span class="hstat-val">48.7M</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-label">Est. Revenue</span>
+        <span class="hstat-val">$1.03B</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-label">Months</span>
+        <span class="hstat-val">12</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="nav-wrapper">
+  <div class="topnav">
+    <button class="tnav-btn on" onclick="show('ps',this)">01 Problem Statement</button>
+    <button class="tnav-btn" onclick="show('clean',this)">02 Data Cleaning</button>
+    <button class="tnav-btn" onclick="show('analysis',this)">03 Analysis Tasks</button>
+    <button class="tnav-btn" onclick="show('dash',this)">04 Dashboard & KPIs</button>
+    <button class="tnav-btn" onclick="show('report',this)">05 Report Format</button>
+    <button class="tnav-btn" onclick="show('tasklist',this)">06 Full Task List</button>
+  </div>
+</div>
+
+<div class="prog-strip">
+  <div class="prog-track"><div class="prog-fill" id="pfill"></div></div>
+  <span class="prog-txt" id="ptxt">0 / 22 Tasks</span>
+</div>
+
+<div id="ps" class="section on">
+<div class="sec-body">
+  <div class="phase-hd"><div class="phase-pill">Section 01</div><div class="phase-title">Problem Statement</div></div>
+
+  <div class="callout orange">
+    <div class="callout-h">Core Problem</div>
+    <div class="callout-b">New York City's yellow taxi industry operates one of the world's largest urban transportation networks. In 2025, 48.7 million trips generated over $1 billion in estimated revenue — yet demand is highly non-uniform across hours, days, boroughs, and seasons. The newly introduced <strong>CBD Congestion Fee ($0.75/trip)</strong> effective January 2025 adds a new revenue and behavioral variable never seen in prior years' data. This project answers: <strong>Where, when, and why do trip volumes and fares surge — and how can the TLC, drivers, and fleet operators use data to make better decisions?</strong></div>
+  </div>
+
+  <div class="g2">
+    <div class="callout teal">
+      <div class="callout-h">Stakeholders</div>
+      <div class="callout-b">
+        <strong>Primary:</strong> TLC Policy Analysts, Fleet Operations Managers<br><br>
+        <strong>Secondary:</strong> Individual drivers optimizing shift timing, Rideshare investors, City transport planners, Fare pricing teams
+      </div>
+    </div>
+    <div class="callout blue">
+      <div class="callout-h">Dataset Context</div>
+      <div class="callout-b">
+        <strong>Source:</strong> NYC TLC Trip Record Data (official)<br>
+        <strong>Format:</strong> 12 Parquet files (Jan–Dec 2025)<br>
+        <strong>Size:</strong> 48.7M rows × 20 columns<br>
+        <strong>New in 2025:</strong> <code>cbd_congestion_fee</code> column
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-hd" style="margin-top:40px"><div class="phase-pill">Research Questions</div><div class="phase-title">Six Key Business Questions</div></div>
+  <div class="g3">
+    <div class="card"><div class="card-n">Q1</div><div class="card-t">Demand Patterns</div><div class="card-b">Which hours, days, and months have highest trip demand? What drives the May–Jun summer peak and Dec holiday surge?</div></div>
+    <div class="card"><div class="card-n">Q2</div><div class="card-t">Revenue Drivers</div><div class="card-b">What combination of distance, duration, payment type, and surcharges drives the highest total fares?</div></div>
+    <div class="card"><div class="card-n">Q3</div><div class="card-t">Surge & Pricing</div><div class="card-b">Do late-night and early-morning trips command higher tip rates? Is there a price sensitivity pattern?</div></div>
+    <div class="card"><div class="card-n">Q4</div><div class="card-t">CBD Fee Impact</div><div class="card-b">How has the new $0.75 Jan 2025 CBD congestion fee changed trip behaviour, volumes, and revenue in Manhattan?</div></div>
+    <div class="card"><div class="card-n">Q5</div><div class="card-t">Geographic Hotspots</div><div class="card-b">Which pickup/dropoff zones generate the most revenue? How do JFK, LaGuardia, and Midtown compare?</div></div>
+    <div class="card"><div class="card-n">Q6</div><div class="card-t">Payment Behavior</div><div class="card-b">Does credit card vs cash split affect average fare? Which zones and hours have highest tipping rates?</div></div>
+  </div>
+
+  <div class="callout purple" style="margin-top: 24px;">
+    <div class="callout-h">Deliverables</div>
+    <div class="callout-b">
+      <strong>1.</strong> Cleaned, combined 12-month dataset (~46M rows after filtering)<br>
+      <strong>2.</strong> Engineered features: hour, day of week, month, trip_duration, fare_per_mile, tip_pct, is_airport, is_cbd<br>
+      <strong>3.</strong> EDA notebook with 12+ charts and statistical findings<br>
+      <strong>4.</strong> Interactive 4-page Tableau/Power BI dashboard (9 visualisations, 6 KPIs)<br>
+      <strong>5.</strong> Executive report with 3 business recommendations
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="clean" class="section">
+<div class="sec-body">
+  <div class="phase-hd"><div class="phase-pill">Section 02</div><div class="phase-title">Data Cleaning & Feature Engineering</div></div>
+
+  <div class="callout orange">
+    <div class="callout-h">Key Data Quality Issues Found in This Dataset</div>
+    <div class="callout-b">
+      <strong>Negative fares:</strong> 144K+ rows with fare_amount &lt; 0 — likely disputed/refund transactions. Drop.<br>
+      <strong>Extreme outliers:</strong> fare max = $863,372 and distance max = 276,423 miles — clearly corrupt. Cap at $500 / 100 miles.<br>
+      <strong>Zero-distance trips:</strong> 90K+ trips with distance = 0 but non-zero fare — keep only if fare &lt; $5 (meter starts), else investigate.<br>
+      <strong>Negative durations:</strong> 124 rows where dropoff &lt; pickup — timezone errors. Drop.<br>
+      <strong>passenger_count nulls:</strong> 540K nulls per month (from VendorID=2 not reporting). Fill with median.
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="tbl">
+      <tr><th>#</th><th>Task</th><th>Column(s)</th><th>Action</th><th>Priority</th></tr>
+      <tr><td>1</td><td><strong>Load all 12 parquet files</strong></td><td>All</td><td>Use <code>pd.concat([pd.read_parquet(f) for f in files])</code>. Add a <code>month</code> column before concat.</td><td><span class="badge b-red">Critical</span></td></tr>
+      <tr><td>2</td><td><strong>Remove negative fares</strong></td><td>fare_amount</td><td>Filter: <code>fare_amount &gt; 0</code>. Removes refunds and corrupted entries.</td><td><span class="badge b-red">Critical</span></td></tr>
+      <tr><td>3</td><td><strong>Cap extreme outliers</strong></td><td>fare_amount, total_amount</td><td>Cap fare at $500, distance at 100 miles, total at $600. Document rows affected.</td><td><span class="badge b-red">Critical</span></td></tr>
+      <tr><td>4</td><td><strong>Remove zero distance</strong></td><td>trip_distance</td><td>Filter: <code>trip_distance &gt; 0</code>. Zero-distance trips distort fare-per-mile.</td><td><span class="badge b-red">Critical</span></td></tr>
+      <tr><td>5</td><td><strong>Calculate trip duration</strong></td><td>tpep_pickup_datetime</td><td>Create <code>duration_min = (dropoff - pickup).dt.total_seconds() / 60</code>. Filter: 1 min ≤ duration ≤ 180 min.</td><td><span class="badge b-red">Critical</span></td></tr>
+      <tr><td>6</td><td><strong>Map ID columns</strong></td><td>payment_type, RatecodeID</td><td>Map payment_type to Credit Card/Cash etc. Map RatecodeID to Standard/JFK etc.</td><td><span class="badge b-or">High</span></td></tr>
+      <tr><td>7</td><td><strong>Engineer: time features</strong></td><td>tpep_pickup_datetime</td><td>Create: <code>pickup_hour</code>, <code>pickup_dow</code>, <code>pickup_month</code>, <code>is_weekend</code>.</td><td><span class="badge b-red">Critical</span></td></tr>
+      <tr><td>8</td><td><strong>Engineer: target metrics</strong></td><td>fare_amount, trip_distance</td><td>Create <code>fare_per_mile</code> and <code>tip_pct</code> (credit card trips only).</td><td><span class="badge b-or">High</span></td></tr>
+      <tr><td>9</td><td><strong>Engineer: domain flags</strong></td><td>RatecodeID, PULocationID</td><td>Create <code>is_airport</code> flag (JFK/LGA) and <code>is_cbd</code> flag (based on cbd_congestion_fee > 0).</td><td><span class="badge b-or">High</span></td></tr>
+    </table>
+  </div>
+
+  <div class="codeblock">
+<span class="cm"># ── Load & combine all 12 months ──────────────────────────</span>
+<span class="ck">import</span> pandas <span class="ck">as</span> pd, numpy <span class="ck">as</span> np, glob
+
+files = sorted(glob.<span class="cf">glob</span>(<span class="cs">'data/raw/yellow_tripdata_2025-*.parquet'</span>))
+dfs = []
+<span class="ck">for</span> i, f <span class="ck">in</span> <span class="cf">enumerate</span>(files):
+    tmp = pd.<span class="cf">read_parquet</span>(f)
+    tmp[<span class="cs">'month'</span>] = i + 1
+    dfs.<span class="cf">append</span>(tmp)
+df = pd.<span class="cf">concat</span>(dfs, ignore_index=True)
+
+<span class="cm"># ── Feature engineering example ───────────────────────────</span>
+df[<span class="cs">'fare_per_mile'</span>] = df[<span class="cs">'fare_amount'</span>] / df[<span class="cs">'trip_distance'</span>]
+df[<span class="cs">'tip_pct'</span>] = np.where(df[<span class="cs">'payment_type'</span>]==1, df[<span class="cs">'tip_amount'</span>]/df[<span class="cs">'fare_amount'</span>]*100, np.nan)
+df[<span class="cs">'is_cbd'</span>] = (df[<span class="cs">'cbd_congestion_fee'</span>] > 0).astype(int)
+df.<span class="cf">to_parquet</span>(<span class="cs">'data/cleaned/nyc_taxi_2025_clean.parquet'</span>)
+  </div>
+</div>
+</div>
+
+<div id="analysis" class="section">
+<div class="sec-body">
+  <div class="phase-hd"><div class="phase-pill">Section 03</div><div class="phase-title">Analysis Tasks — Descriptive to Predictive</div></div>
+
+  <div class="table-wrap">
+    <table class="tbl">
+      <tr><th>#</th><th>Analysis Task</th><th>Method</th><th>Expected Finding</th><th>Type</th></tr>
+      <tr><td>1</td><td><strong>Monthly trip volume trend</strong></td><td>groupby month + sum</td><td>May–Jun peak (~4.6M trips), Jan trough. Dec holiday spike.</td><td><span class="badge b-te">Descriptive</span></td></tr>
+      <tr><td>2</td><td><strong>Hourly demand heatmap</strong></td><td>pivot: hour × dow</td><td>Fri/Sat 21:00–02:00 = nightlife surge. Mon–Fri 07:00–09:00 = commute.</td><td><span class="badge b-te">Descriptive</span></td></tr>
+      <tr><td>3</td><td><strong>Payment type revenue split</strong></td><td>groupby payment_label</td><td>Credit card = 70% of trips, higher avg fare ($21 vs $17 cash).</td><td><span class="badge b-te">Descriptive</span></td></tr>
+      <tr><td>4</td><td><strong>Fare distribution analysis</strong></td><td>sns.histplot</td><td>Right-skewed: median ~$12.8. Most trips $8–$20 range.</td><td><span class="badge b-te">Descriptive</span></td></tr>
+      <tr><td>5</td><td><strong>Tip rate by hour</strong></td><td>groupby hour + mean(tip)</td><td>Late night 01:00–04:00 highest tips (~32–36%). Rush hour lowest.</td><td><span class="badge b-pu">Diagnostic</span></td></tr>
+      <tr><td>6</td><td><strong>Airport vs standard trips</strong></td><td>groupby is_airport</td><td>Airport trips: avg $78 fare. Standard: $12.8 fare. Airport wins on revenue/hr.</td><td><span class="badge b-pu">Diagnostic</span></td></tr>
+      <tr><td>7</td><td><strong>CBD Congestion Fee impact</strong></td><td>groupby is_cbd + monthly</td><td>66% of trips hit zone. $24M+ annual fee revenue. Track volume shifts.</td><td><span class="badge b-pu">Diagnostic</span></td></tr>
+      <tr><td>8</td><td><strong>Top zones by volume/revenue</strong></td><td>groupby PULocationID</td><td>Midtown, Upper East Side dominate pickups. JFK tops revenue per trip.</td><td><span class="badge b-te">Descriptive</span></td></tr>
+      <tr><td>9</td><td><strong>Speed analysis by hour</strong></td><td>groupby hour + mean(speed)</td><td>Rush hour 07:00–09:00 slowest speeds. Inverse of demand.</td><td><span class="badge b-pu">Diagnostic</span></td></tr>
+      <tr><td>10</td><td><strong>Driver shift optimization</strong></td><td>groupby hour + sum(total)</td><td>Fri/Sat 22:00–02:00 are highest revenue-per-driver-hour windows.</td><td><span class="badge b-or">Predictive</span></td></tr>
+    </table>
+  </div>
+</div>
+</div>
+
+<div id="dash" class="section">
+<div class="sec-body">
+  <div class="phase-hd"><div class="phase-pill">Section 04</div><div class="phase-title">Dashboard KPIs & Visualisation Specs</div></div>
+
+  <div class="g3">
+    <div class="kpi"><div class="kpi-n">Total Trips (YTD)</div><div class="kpi-v" style="color:var(--primary)">48.7M</div><div class="kpi-d">All 12 months · cleaned dataset</div></div>
+    <div class="kpi"><div class="kpi-n">Total Revenue (Est.)</div><div class="kpi-v" style="color:var(--success)">$1.03B</div><div class="kpi-d">Sum of total_amount after cleaning</div></div>
+    <div class="kpi"><div class="kpi-n">Avg Total Fare / Trip</div><div class="kpi-v" style="color:var(--text-main)">$21.37</div><div class="kpi-d">Median total_amount</div></div>
+    <div class="kpi"><div class="kpi-n">Avg Tip Rate</div><div class="kpi-v" style="color:var(--purple)">26.3%</div><div class="kpi-d">Credit card trips only</div></div>
+    <div class="kpi"><div class="kpi-n">Avg Trip Distance</div><div class="kpi-v" style="color:var(--text-main)">1.85mi</div><div class="kpi-d">Median trip_distance</div></div>
+    <div class="kpi"><div class="kpi-n">CBD Congestion Trips</div><div class="kpi-v" style="color:var(--brand-text)">66%</div><div class="kpi-d">New 2025 policy — $0.75/trip</div></div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="tbl">
+      <tr><th>#</th><th>Chart Title</th><th>Axes / Config</th><th>Page</th><th>Why</th></tr>
+      <tr><td>1</td><td><strong>Monthly Trip Volume & Rev</strong></td><td>X: month · Y1: trips · Y2: revenue line</td><td>Overview</td><td>Shows seasonality and revenue tracking.</td></tr>
+      <tr><td>2</td><td><strong>Hourly Demand Heatmap</strong></td><td>X: hour · Y: DOW · Color: trip count</td><td>Demand</td><td>Reveals precise surge windows (e.g. Fri 22:00).</td></tr>
+      <tr><td>3</td><td><strong>Fare Amount Distribution</strong></td><td>Bins: $1–$200 · Log Y-axis option</td><td>Revenue</td><td>Shows the $8–$20 sweet spot for most trips.</td></tr>
+      <tr><td>4</td><td><strong>Payment Type Split</strong></td><td>X: month · Y: % share (Stacked Bar)</td><td>Revenue</td><td>Track payment behaviour shifts through the year.</td></tr>
+      <tr><td>5</td><td><strong>Avg Tip % by Hour</strong></td><td>X: hour · Y: mean(tip_pct)</td><td>Revenue</td><td>Direct driver advice: working nights = more tips.</td></tr>
+      <tr><td>6</td><td><strong>Top 10 Zones by Volume</strong></td><td>Y: zone name · X: trip count (H-Bar)</td><td>Geo</td><td>Shows where supply should be concentrated.</td></tr>
+      <tr><td>7</td><td><strong>CBD Fee Monthly Impact</strong></td><td>X: month · Y: area chart of CBD trips</td><td>Geo</td><td>Unique to 2025. Tracks behavioural shift.</td></tr>
+      <tr><td>8</td><td><strong>Airport Revenue Boxplot</strong></td><td>Groups: Standard / JFK / Newark</td><td>Pricing</td><td>Proves JFK trips generate significantly higher revenue.</td></tr>
+    </table>
+  </div>
+</div>
+</div>
+
+<div id="report" class="section">
+<div class="sec-body">
+  <div class="phase-hd"><div class="phase-pill">Section 05</div><div class="phase-title">Report Format</div></div>
+
+  <div class="report-block">
+    <div class="report-block-hd"><span>Section 1 — Executive Summary</span><span>1 Page Max</span></div>
+    <div class="report-block-bd">
+      <strong style="color:var(--text-main)">3 Headline Findings</strong> — lead with the number. Example: <em>"48.7M trips generated an estimated $1.03B in fares — with May being the single highest-demand month."</em><br><br>
+      <strong style="color:var(--text-main)">3 Recommendations</strong> — one action each for TLC/operators/drivers.<br><br>
+      <strong style="color:var(--text-main)">KPI Summary Table:</strong> 6 metrics | actual value | benchmark | status.
+    </div>
+  </div>
+
+  <div class="report-block">
+    <div class="report-block-hd"><span>Section 2 & 3 — Methodology & Key Findings</span><span>5-6 Pages</span></div>
+    <div class="report-block-bd">
+      One subsection per major analysis. Each subsection strictly follows: <br><br>
+      <strong style="color:var(--brand-text)">Finding [insight sentence] → Evidence [stats] → Chart [embedded] → Business Implication [2 sentences].</strong><br><br>
+      Must include: Demand seasonality, Hourly surge pattern, CBD fee impact, Airport vs standard economics, Tip behavior by hour.
+    </div>
+  </div>
+
+  <div class="report-block">
+    <div class="report-block-hd"><span>Section 4 — Business Recommendations</span><span>1-2 Pages</span></div>
+    <div class="report-block-bd">
+      <strong style="color:var(--text-main)">Rec 1 (Drivers):</strong> Optimize shifts to Fri/Sat 20:00–02:00 and weekday 17:00–19:00. Cite hourly demand × tip rate.<br><br>
+      <strong style="color:var(--text-main)">Rec 2 (Operators):</strong> Position vehicles near JFK/LGA during off-peak hours (airport trips = 3–5x standard fare).<br><br>
+      <strong style="color:var(--text-main)">Rec 3 (Policy):</strong> Monitor CBD congestion zone volume MoM to ensure fee is not reducing taxi access disproportionately.
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tasklist" class="section">
+<div class="layout">
+  
+<aside class="sidebar">
+  <div class="sb-title">All Tasks</div>
+  <div id="sb-links"></div>
+</aside>
+
+<div class="content">
+
+<div id="p0">
+  <div class="phase-hd"><div class="phase-pill">Phase 0</div><div class="phase-title">Setup & Environment</div></div>
+
+  <div class="task" id="t1">
+    <div class="t-head" onclick="tog('t1')">
+      <div class="t-cb" onclick="event.stopPropagation();tDone('t1')">
+        <div class="cb"><svg><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+      </div>
+      <div class="t-meta">
+        <div class="t-title">Create project structure & environment</div>
+        <div class="t-tags"><span class="tag tg-py">Python</span></div>
+      </div>
+      <div class="t-right"><span class="eff">30m</span><div class="pdot pc"></div></div>
+    </div>
+    <div class="t-body" id="b-t1">
+      <div>
+        <div class="tbl-lbl">Action Steps</div>
+        <ul class="steps">
+          <li>Create root folder: <code>nyc_taxi_2025/</code> and all necessary subfolders.</li>
+          <li>Move all 12 parquet files into <code>data/raw/</code></li>
+          <li>Create virtual environment and install dependencies (<code>pandas pyarrow</code> etc).</li>
+          <li>Create <code>requirements.txt</code> and initialize Git repo.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tbl-lbl">Expected Output</div>
+        <div class="outnote">Organised project folder committed to GitHub. README drafted.</div>
+        <div class="repo-box">
+          <div class="repo-header">
+            <svg class="tree-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            nyc_taxi_2025
+          </div>
+          <ul class="tree-list">
+            <li>
+              <div class="tree-item"><svg class="tree-icon folder" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> data/</div>
+              <ul>
+                <li><div class="tree-item"><svg class="tree-icon folder" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> raw/</div></li>
+                <li><div class="tree-item"><svg class="tree-icon folder" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> cleaned/</div></li>
+              </ul>
+            </li>
+            <li><div class="tree-item"><svg class="tree-icon folder" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> notebooks/</div></li>
+            <li><div class="tree-item"><svg class="tree-icon folder" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> outputs/</div></li>
+            <li><div class="tree-item"><svg class="tree-icon" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg> requirements.txt</div></li>
+            <li><div class="tree-item"><svg class="tree-icon" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg> README.md</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" id="t2">
+    <div class="t-head" onclick="tog('t2')">
+      <div class="t-cb" onclick="event.stopPropagation();tDone('t2')">
+        <div class="cb"><svg><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+      </div>
+      <div class="t-meta">
+        <div class="t-title">Load initial sample & data inventory</div>
+        <div class="t-tags"><span class="tag tg-py">Python</span></div>
+      </div>
+      <div class="t-right"><span class="eff">45m</span><div class="pdot pc"></div></div>
+    </div>
+    <div class="t-body" id="b-t2">
+      <div>
+        <div class="tbl-lbl">Action Steps</div>
+        <ul class="steps">
+          <li>Open notebook: <code>00_data_exploration.ipynb</code></li>
+          <li>Load Jan only. Print <code>df.shape</code> — expect (3,475,226, 20)</li>
+          <li>Print <code>df.describe()</code> — note extreme outliers in fare_amount.</li>
+          <li>Print <code>df.isnull().sum()</code> — note ~540K nulls in passenger_count.</li>
+          <li>Check <code>cbd_congestion_fee</code> — the new 2025 binary fee.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tbl-lbl">Key Findings to Document</div>
+        <div class="outnote"><strong>Must capture:</strong> Null counts, min/max values showing outliers, and the new 2025 cbd fee behavior. This inventory document saves immense time during the cleaning phase.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="p1">
+  <div class="divr"><div class="divr-l"></div><div class="divr-t">Phase 1 — Data Cleaning</div><div class="divr-l"></div></div>
+  <div class="phase-hd"><div class="phase-pill">Phase 1</div><div class="phase-title">Data Cleaning — All 12 Months</div></div>
+
+  <div class="task" id="t3">
+    <div class="t-head" onclick="tog('t3')">
+      <div class="t-cb" onclick="event.stopPropagation();tDone('t3')">
+        <div class="cb"><svg><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+      </div>
+      <div class="t-meta">
+        <div class="t-title">Load & combine all 12 parquet files</div>
+        <div class="t-tags"><span class="tag tg-py">Python</span></div>
+      </div>
+      <div class="t-right"><span class="eff">1.5h</span><div class="pdot pc"></div></div>
+    </div>
+    <div class="t-body" id="b-t3">
+      <div>
+        <div class="tbl-lbl">Action Steps</div>
+        <ul class="steps">
+          <li>Open new notebook: <code>01_data_cleaning.ipynb</code></li>
+          <li>Use <code>glob.glob()</code> to list all 12 parquet files.</li>
+          <li>Loop through files, add <code>month</code> column before appending.</li>
+          <li>Concat all with <code>pd.concat(dfs)</code>. Expect ~48.7M rows.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tbl-lbl">Memory Management Note</div>
+        <div class="outnote"><strong>If RAM is limited (&lt;16GB):</strong> Process month by month, clean each file individually, save to cleaned parquet, then concat only the cleaned files.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" id="t4">
+    <div class="t-head" onclick="tog('t4')">
+      <div class="t-cb" onclick="event.stopPropagation();tDone('t4')">
+        <div class="cb"><svg><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+      </div>
+      <div class="t-meta">
+        <div class="t-title">Filter invalid fares, distances & durations</div>
+        <div class="t-tags"><span class="tag tg-py">Python</span></div>
+      </div>
+      <div class="t-right"><span class="eff">2h</span><div class="pdot pc"></div></div>
+    </div>
+    <div class="t-body" id="b-t4">
+      <div>
+        <div class="tbl-lbl">Action Steps</div>
+        <ul class="steps">
+          <li>Calculate duration_min: <code>(dropoff - pickup).dt.total_seconds() / 60</code></li>
+          <li>fare_amount between $1 and $500.</li>
+          <li>trip_distance between 0.01 and 100 miles.</li>
+          <li>duration_min between 1 and 180 minutes.</li>
+          <li>pickup year == 2025.</li>
+          <li>Print a table tracking rows removed at each step.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tbl-lbl">Expected Output</div>
+        <div class="outnote">Expected final count: ~46M rows (about 5–7% removed due to errors/outliers).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" id="t5">
+    <div class="t-head" onclick="tog('t5')">
+      <div class="t-cb" onclick="event.stopPropagation();tDone('t5')">
+        <div class="cb"><svg><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+      </div>
+      <div class="t-meta">
+        <div class="t-title">Map categorical IDs to human labels</div>
+        <div class="t-tags"><span class="tag tg-py">Python</span></div>
+      </div>
+      <div class="t-right"><span class="eff">45m</span><div class="pdot pc"></div></div>
+    </div>
+    <div class="t-body" id="b-t5">
+      <div>
+        <div class="tbl-lbl">Action Steps</div>
+        <ul class="steps">
+          <li>Map payment_type: 1='Credit Card', 2='Cash'.</li>
+          <li>Map RatecodeID: 1='Standard', 2='JFK', 3='Newark'.</li>
+          <li>Download TLC zone lookup CSV from nyc.gov and join on PULocationID to get Borough and Zone name.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tbl-lbl">TLC Zone Lookup</div>
+        <div class="outnote">Joining on LocationID is crucial for the geographic analysis phase later.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" id="t6">
+    <div class="t-head" onclick="tog('t6')">
+      <div class="t-cb" onclick="event.stopPropagation();tDone('t6')">
+        <div class="cb"><svg><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+      </div>
+      <div class="t-meta">
+        <div class="t-title">Create all engineered features</div>
+        <div class="t-tags"><span class="tag tg-py">Python</span></div>
+      </div>
+      <div class="t-right"><span class="eff">1.5h</span><div class="pdot pc"></div></div>
+    </div>
+    <div class="t-body" id="b-t6">
+      <div>
+        <div class="tbl-lbl">Action Steps</div>
+        <ul class="steps">
+          <li><code>pickup_hour</code>, <code>pickup_dow</code>, <code>is_weekend</code></li>
+          <li><code>fare_per_mile = fare_amount / trip_distance</code></li>
+          <li><code>tip_pct = tip_amount / fare_amount</code> (for CC trips)</li>
+          <li><code>is_airport = RatecodeID.isin([2,3])</code></li>
+          <li><code>is_cbd = cbd_congestion_fee > 0</code></li>
+          <li>Save final parquet file.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tbl-lbl">Expected Output</div>
+        <div class="outnote">Final clean dataset: ~46M rows × 30 columns. Saved as fast-loading parquet.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="p2">
+  <div class="divr"><div class="divr-l"></div><div class="divr-t">Phase 2 — EDA</div><div class="divr-l"></div></div>
+  <div class="phase-hd"><div class="phase-pill">Phase 2</div><div class="phase-title">Exploratory Data Analysis</div></div>
+
+  <div class="task" id="t7">
+    <div class="t-head" onclick="tog('t7')">
+      <div class="t-cb" onclick="event.stopPropagation();tDone('t7')">
+        <div class="cb"><svg><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+      </div>
+      <div class="t-meta">
+        <div class="t-title">Monthly trip volume & revenue seasonality</div>
+        <div class="t-tags"><span class="tag tg-py">Python</span><span class="tag tg-v">Matplotlib</span></div>
+      </div>
+      <div class="t-right"><span class="eff">1.5h</span><div class="pdot pc"></div></div>
+    </div>
+    <div class="t-body" id="b-t7">
+      <div>
+        <div class="tbl-lbl">Action Steps</div>
+        <ul class="steps">
+          <li>groupby('pickup_month') and compute metrics.</li>
+          <li>Create dual-axis chart: bars = trip count, line = total revenue.</li>
+          <li>Write observation on highest/lowest months.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tbl-lbl">Expected Finding</div>
+        <div class="outnote">May = highest at ~4.6M trips. Jan = lowest. Dec shows holiday premium tipping effect.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" id="t8">
+    <div class="t-head" onclick="tog('t8')">
+      <div class="t-cb" onclick="event.stopPropagation();tDone('t8')">
+        <div class="cb"><svg><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+      </div>
+      <div class="t-meta">
+        <div class="t-title">Hourly demand heatmap</div>
+        <div class="t-tags"><span class="tag tg-py">Python</span><span class="tag tg-v">Seaborn</span></div>
+      </div>
+      <div class="t-right"><span class="eff">2h</span><div class="pdot pc"></div></div>
+    </div>
+    <div class="t-body" id="b-t8">
+      <div>
+        <div class="tbl-lbl">Action Steps</div>
+        <ul class="steps">
+          <li>Create pivot table: <code>df.groupby(['pickup_dow','pickup_hour']).size().unstack()</code></li>
+          <li>Plot seaborn heatmap using YlOrRd colormap.</li>
+          <li>Annotate highest and lowest cells for driver insights.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tbl-lbl">Expected Finding</div>
+        <div class="outnote">Fri/Sat show dramatic late-night surge (21:00–02:00). Mon-Fri show AM/PM commuter peaks.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" id="t9">
+    <div class="t-head" onclick="tog('t9')">
+      <div class="t-cb" onclick="event.stopPropagation();tDone('t9')">
+        <div class="cb"><svg><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+      </div>
+      <div class="t-meta">
+        <div class="t-title">Fare & revenue distribution</div>
+        <div class="t-tags"><span class="tag tg-py">Python</span><span class="tag tg-v">Seaborn</span></div>
+      </div>
+      <div class="t-right"><span class="eff">1.5h</span><div class="pdot pc"></div></div>
+    </div>
+    <div class="t-body" id="b-t9">
+      <div>
+        <div class="tbl-lbl">Action Steps</div>
+        <ul class="steps">
+          <li>Plot histogram of fares ≤ $200. Add mean/median lines.</li>
+          <li>Boxplot total_amount by rate_label to compare airport vs standard.</li>
+          <li>Calculate revenue concentration (what % of trips make 50% revenue).</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tbl-lbl">Expected Finding</div>
+        <div class="outnote">Airport trips (~3% of volume) account for ~15% of total revenue. JFK avg $78 vs standard $12.8.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" id="t10">
+    <div class="t-head" onclick="tog('t10')">
+      <div class="t-cb" onclick="event.stopPropagation();tDone('t10')">
+        <div class="cb"><svg><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+      </div>
+      <div class="t-meta">
+        <div class="t-title">Tip rate analysis by hour</div>
+        <div class="t-tags"><span class="tag tg-py">Python</span><span class="tag tg-s">Stats</span></div>
+      </div>
+      <div class="t-right"><span class="eff">2h</span><div class="pdot pc"></div></div>
+    </div>
+    <div class="t-body" id="b-t10">
+      <div>
+        <div class="tbl-lbl">Action Steps</div>
+        <ul class="steps">
+          <li>Filter to CC trips. Compute mean <code>tip_pct</code> by hour.</li>
+          <li>Run Kruskal-Wallis test to prove tips vary by hour.</li>
+          <li>Plot as bar chart and highlight premium tipping hours.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tbl-lbl">Expected Finding</div>
+        <div class="outnote">Late-night hours (01:00-04:00) tip heavily (32%+). Commute hours tip lowest.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" id="t11">
+    <div class="t-head" onclick="tog('t11')">
+      <div class="t-cb" onclick="event.stopPropagation();tDone('t11')">
+        <div class="cb"><svg><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+      </div>
+      <div class="t-meta">
+        <div class="t-title">CBD Congestion Fee impact</div>
+        <div class="t-tags"><span class="tag tg-py">Python</span></div>
+      </div>
+      <div class="t-right"><span class="eff">2h</span><div class="pdot ph"></div></div>
+    </div>
+    <div class="t-body" id="b-t11">
+      <div>
+        <div class="tbl-lbl">Action Steps</div>
+        <ul class="steps">
+          <li>Calculate CBD trip % by month as area chart.</li>
+          <li>Estimate total CBD fee revenue collected.</li>
+          <li>Analyze behavioural volume drop-offs in the CBD zone over the year.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tbl-lbl">Why This Is Special</div>
+        <div class="outnote">Unique to 2025. Proves you actively read the latest policy changes and integrated them into the data story.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" id="t12">
+    <div class="t-head" onclick="tog('t12')">
+      <div class="t-cb" onclick="event.stopPropagation();tDone('t12')">
+        <div class="cb"><svg><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+      </div>
+      <div class="t-meta">
+        <div class="t-title">Driver revenue optimization model</div>
+        <div class="t-tags"><span class="tag tg-py">Python</span></div>
+      </div>
+      <div class="t-right"><span class="eff">2h</span><div class="pdot pc"></div></div>
+    </div>
+    <div class="t-body" id="b-t12">
+      <div>
+        <div class="tbl-lbl">Action Steps</div>
+        <ul class="steps">
+          <li>Group by hour and DOW. Compute mean revenue per trip * trips per hour.</li>
+          <li>Rank all 168 time slots by "revenue per driver-hour".</li>
+          <li>Plot top 20 actionable time slots.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tbl-lbl">Expected Finding</div>
+        <div class="outnote">Provides exact numeric backing for Recommendation #1 (shift planning).</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="p3">
+  <div class="divr"><div class="divr-l"></div><div class="divr-t">Phase 3 — Dashboard</div><div class="divr-l"></div></div>
+  <div class="phase-hd"><div class="phase-pill">Phase 3</div><div class="phase-title">Dashboard Build</div></div>
+
+  <div class="task" id="t14">
+    <div class="t-head" onclick="tog('t14')">
+      <div class="t-cb" onclick="event.stopPropagation();tDone('t14')">
+        <div class="cb"><svg><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+      </div>
+      <div class="t-meta">
+        <div class="t-title">Export aggregated CSVs for Dashboard</div>
+        <div class="t-tags"><span class="tag tg-py">Python</span><span class="tag tg-v">Tableau</span></div>
+      </div>
+      <div class="t-right"><span class="eff">1.5h</span><div class="pdot pc"></div></div>
+    </div>
+    <div class="t-body" id="b-t14">
+      <div>
+        <div class="tbl-lbl">Action Steps</div>
+        <ul class="steps">
+          <li>Export <code>monthly_summary.csv</code>, <code>hourly_dow_summary.csv</code>, <code>zone_summary.csv</code>.</li>
+          <li>Connect BI tool to summary tables (not 46M row raw file).</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tbl-lbl">Why Pre-Aggregate</div>
+        <div class="outnote">Connecting a BI tool directly to 46M rows on a laptop is a mistake. Aggregating replicates real-world data warehousing workflows.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" id="t15">
+    <div class="t-head" onclick="tog('t15')">
+      <div class="t-cb" onclick="event.stopPropagation();tDone('t15')">
+        <div class="cb"><svg><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+      </div>
+      <div class="t-meta">
+        <div class="t-title">Build Dashboard Pages (1-4)</div>
+        <div class="t-tags"><span class="tag tg-v">Tableau / BI</span></div>
+      </div>
+      <div class="t-right"><span class="eff">6.5h</span><div class="pdot pc"></div></div>
+    </div>
+    <div class="t-body" id="b-t15">
+      <div>
+        <div class="tbl-lbl">Action Steps</div>
+        <ul class="steps">
+          <li>Page 1: Overview KPIs & Monthly Trend.</li>
+          <li>Page 2: Demand Heatmap & Weekday vs Weekend.</li>
+          <li>Page 3: Revenue, Tips, and Airport Boxplot.</li>
+          <li>Page 4: Geographical Zones & CBD Congestion Area Chart.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tbl-lbl">Expected Output</div>
+        <div class="outnote">A cohesive, interactive 4-page dashboard ready for portfolio publication.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="p4">
+  <div class="divr"><div class="divr-l"></div><div class="divr-t">Phase 4 — Publishing</div><div class="divr-l"></div></div>
+  <div class="phase-hd"><div class="phase-pill">Phase 4</div><div class="phase-title">Report & Portfolio Publishing</div></div>
+
+  <div class="task" id="t19">
+    <div class="t-head" onclick="tog('t19')">
+      <div class="t-cb" onclick="event.stopPropagation();tDone('t19')">
+        <div class="cb"><svg><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+      </div>
+      <div class="t-meta">
+        <div class="t-title">Draft Executive Summary & Report</div>
+        <div class="t-tags"><span class="tag tg-r">Report</span></div>
+      </div>
+      <div class="t-right"><span class="eff">5h</span><div class="pdot pc"></div></div>
+    </div>
+    <div class="t-body" id="b-t19">
+      <div>
+        <div class="tbl-lbl">Action Steps</div>
+        <ul class="steps">
+          <li>Draft 3 numeric headline findings and 3 actionable business recommendations.</li>
+          <li>Structure key finding sections (Insight → Evidence → Chart → Implication).</li>
+          <li>Format as a clean PDF for sharing.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tbl-lbl">Format Rule</div>
+        <div class="outnote">Start every chart caption with the insight, not a dry description of the axes.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" id="t21">
+    <div class="t-head" onclick="tog('t21')">
+      <div class="t-cb" onclick="event.stopPropagation();tDone('t21')">
+        <div class="cb"><svg><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+      </div>
+      <div class="t-meta">
+        <div class="t-title">Publish GitHub README & LinkedIn</div>
+        <div class="t-tags"><span class="tag tg-r">GitHub</span></div>
+      </div>
+      <div class="t-right"><span class="eff">2h</span><div class="pdot pc"></div></div>
+    </div>
+    <div class="t-body" id="b-t21">
+      <div>
+        <div class="tbl-lbl">Action Steps</div>
+        <ul class="steps">
+          <li>Write clear GitHub README with screenshots, findings, and install instructions.</li>
+          <li>Publish interactive Tableau workbook to Tableau Public.</li>
+          <li>Draft LinkedIn post tagging relevant tools and data sources.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tbl-lbl">Expected Output</div>
+        <div class="outnote">Live, accessible portfolio assets that prove end-to-end execution.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="totals">
+  <div><div class="tot-v">20</div><div class="tot-l">Core Tasks</div></div>
+  <div><div class="tot-v">4</div><div class="tot-l">Project Phases</div></div>
+  <div><div class="tot-v">14</div><div class="tot-l">Working Days</div></div>
+  <div><div class="tot-v">~48</div><div class="tot-l">Est. Hours</div></div>
+</div>
+
+</div></div></div><script>
+const TOTAL = 20; // Adjusted based on consolidated view
+let done = new Set(JSON.parse(localStorage.getItem('nyc_done_v3') || '[]'));
+
+function buildSB() {
+  const tasks = document.querySelectorAll('.task');
+  const sb = document.getElementById('sb-links');
+  if (!sb) return;
+  sb.innerHTML = '';
+  
+  let i = 1;
+  tasks.forEach(t => {
+    const id = t.id;
+    const title = t.querySelector('.t-title').textContent;
+    const el = document.createElement('div');
+    el.className = 'sb-item';
+    el.innerHTML = `<span class="sb-n">${i}</span><span class="sb-t">${title}</span><div class="sb-ck ${done.has(id)?'done':''}"></div>`;
+    el.onclick = () => document.getElementById(id).scrollIntoView({behavior:'smooth', block: 'center'});
+    sb.appendChild(el);
+    i++;
+  });
+}
+
+function tog(id) {
+  const b = document.getElementById('b-'+id);
+  b.classList.toggle('open');
+}
+
+function tDone(id) {
+  const t = document.getElementById(id);
+  done.has(id) ? done.delete(id) : done.add(id);
+  t.classList.toggle('done', done.has(id));
+  localStorage.setItem('nyc_done_v3', JSON.stringify([...done]));
+  updateProg();
+  buildSB();
+}
+
+function updateProg() {
+  const n = done.size;
+  document.getElementById('pfill').style.width = (n / TOTAL * 100) + '%';
+  document.getElementById('ptxt').textContent = `${n} / ${TOTAL} Tasks`;
+}
+
+function show(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('on'));
+  document.querySelectorAll('.tnav-btn').forEach(b => b.classList.remove('on'));
+  
+  document.getElementById(id).classList.add('on');
+  el.classList.add('on');
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  
+  if (id === 'tasklist') { setTimeout(buildSB, 50); }
+}
+
+// Init
+done.forEach(id => { const t = document.getElementById(id); if (t) t.classList.add('done'); });
+updateProg();
+buildSB();
+
+// Open first task
+const fb = document.getElementById('b-t1');
+if (fb) fb.classList.add('open');
+</script>
+</body>
+</html>
+```
